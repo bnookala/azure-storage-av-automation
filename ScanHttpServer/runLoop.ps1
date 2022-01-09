@@ -16,7 +16,7 @@ Write-Host Installing dotnet Runtime
 Write-Host Starting Process $ExePath
 while($true){
     $process = Start-Process dotnet -ArgumentList $ExePath -PassThru -Wait
-    
+
     if($process.ExitCode -ne 0){
         Write-Host Process Exited with errors, please check the logs in $ScanHttpServerFolder\log
     }
