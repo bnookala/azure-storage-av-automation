@@ -23,7 +23,8 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
+        containerRegistry: 'aksdefender'
+        repository: 'defender-windows-docker'
         command: 'buildAndPush'
-        dockerfile: '**/Dockerfile'
-        tags: |
-          $(tag)
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
