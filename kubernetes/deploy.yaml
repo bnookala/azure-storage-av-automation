@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: windows-defender
+  labels:
+    app: windows-defender
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: windows-defender
+  template:
+    metadata:
+      labels:
+        app: windows-defender
+    spec:
+      containers:
+      - name: nginx
+        image: aksdefender.azurecr.io/defender-windows-docker:63
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        agentpool: win
