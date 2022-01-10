@@ -1,4 +1,4 @@
-$ScanHttpServerFolder = "C:\ScanHttpServer\build"
+$ScanHttpServerFolder = "C:\ScanHttpServer"
 $ExePath = "$ScanHttpServerFolder\ScanHttpServer.exe"
 
 Start-Transcript -Path runLoopStartup.log
