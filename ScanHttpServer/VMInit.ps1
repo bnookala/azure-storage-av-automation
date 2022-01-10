@@ -47,6 +47,8 @@ cd $ScanHttpServerFolder
 Write-Host Installing dotnet Runtime
 .\dotnet-install.ps1 -Channel 5.0 -Runtime dotnet
 
+
+$ExePath = "$ScanHttpServerFolder\bin\ScanHttpServer.dll"
 Write-Host Starting Process $ExePath
 while($true){
     $pinfo = New-Object System.Diagnostics.ProcessStartInfo
