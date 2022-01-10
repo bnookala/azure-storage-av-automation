@@ -3,6 +3,16 @@ $ExePath = "$ScanHttpServerFolder\ScanHttpServer.dll"
 
 Start-Transcript -Path runLoopStartup.log
 
+Write-Host Install .net 5 sdk + runtime
+if (-Not (Test-Path $ScanHttpServerFolder\dotnet-install.ps1)){
+    Write-Host dotnet-install script doesnt exist, Downloading
+    Invoke-WebRequest "https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1" -OutFile $ScanHttpServerFolder\dotnet-install.ps1
+}
+
+cd $ScanHttpServer
+Write-Host Installing dotnet Runtime
+.\dotnet-install.ps1 -Channel 5.0 -Runtime dotnet
+
 Write-Host Starting Process $ExePath
 while($true){
     $pinfo = New-Object System.Diagnostics.ProcessStartInfo
