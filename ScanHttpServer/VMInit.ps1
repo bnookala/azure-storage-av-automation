@@ -3,8 +3,6 @@ $ScanHttpServerFolder = "C:\ScanHttpServer\bin"
 
 Start-Transcript -Path C:\VmInit.log
 
-$ScanHttpServerBinZipUrl = "https://github.com/Azure/azure-storage-av-automation/releases/latest/download/ScanHttpServer.zip"
-
 # Download Http Server bin files
 
 Write-Host Expanding ScanHttpServer
@@ -24,12 +22,13 @@ Write-Host successfully created new certificate $cert
 netsh http add sslcert ipport=0.0.0.0:443 appid=$appGuid certhash="$thumb"
 
 #Write-Host Adding firewall rules
-#New-NetFirewallRule -DisplayName "ServerFunctionComunicationIn" -Direction Inbound -LocalPort 443 -Protocol TCP -Action Allow
-#New-NetFirewallRule -DisplayName "ServerFunctionComunicationOut" -Direction Outbound -LocalPort 443 -Protocol TCP -Action Allow
+New-NetFirewallRule -DisplayName "ServerFunctionComunicationIn" -Direction Inbound -LocalPort 443 -Protocol TCP -Action Allow
+New-NetFirewallRule -DisplayName "ServerFunctionComunicationOut" -Direction Outbound -LocalPort 443 -Protocol TCP -Action Allow
 
 #Updating antivirus Signatures
 Write-Host Updating Signatures for the antivirus
 & "C:\Program Files\Windows Defender\MpCmdRun.exe" -SignatureUpdate
+
 #Running the App
 Write-Host Starting Run-Loop
 
@@ -43,7 +42,6 @@ if (-Not (Test-Path $ScanHttpServerFolder\dotnet-install.ps1)){
 
 Write-Host Installing dotnet Runtime
 .\dotnet-install.ps1 -Channel 5.0 -Runtime dotnet
-
 
 $ExePath = "$ScanHttpServerFolder\ScanHttpServer.dll"
 Write-Host Starting Process $ExePath
