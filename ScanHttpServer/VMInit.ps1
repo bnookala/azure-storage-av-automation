@@ -23,9 +23,9 @@ Write-Host successfully created new certificate $cert
 #netsh http delete sslcert ipport=0.0.0.0:443
 netsh http add sslcert ipport=0.0.0.0:443 appid=$appGuid certhash="$thumb"
 
-Write-Host Adding firewall rules
-New-NetFirewallRule -DisplayName "ServerFunctionComunicationIn" -Direction Inbound -LocalPort 443 -Protocol TCP -Action Allow
-New-NetFirewallRule -DisplayName "ServerFunctionComunicationOut" -Direction Outbound -LocalPort 443 -Protocol TCP -Action Allow
+#Write-Host Adding firewall rules
+#New-NetFirewallRule -DisplayName "ServerFunctionComunicationIn" -Direction Inbound -LocalPort 443 -Protocol TCP -Action Allow
+#New-NetFirewallRule -DisplayName "ServerFunctionComunicationOut" -Direction Outbound -LocalPort 443 -Protocol TCP -Action Allow
 
 #Updating antivirus Signatures
 Write-Host Updating Signatures for the antivirus
