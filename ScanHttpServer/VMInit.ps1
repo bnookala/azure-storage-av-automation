@@ -43,6 +43,9 @@ if (-Not (Test-Path $ScanHttpServerFolder\dotnet-install.ps1)){
 Write-Host Installing dotnet Runtime
 .\dotnet-install.ps1 -Channel 5.0 -Runtime dotnet
 
+# Install script does not modify path so we have to do it ourselves
+$env:Path += "C:\Users\ContainerAdministrator\AppData\Local\Microsoft\dotnet\"
+
 $ExePath = "$ScanHttpServerFolder\ScanHttpServer.dll"
 Write-Host Starting Process $ExePath
 while($true){
