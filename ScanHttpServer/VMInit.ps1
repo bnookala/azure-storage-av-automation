@@ -41,12 +41,11 @@ if (-Not (Test-Path $ScanHttpServerFolder\dotnet-install.ps1)){
     Invoke-WebRequest "https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1" -OutFile $ScanHttpServerFolder\dotnet-install.ps1
 }
 
-cd $ScanHttpServerFolder
 Write-Host Installing dotnet Runtime
 .\dotnet-install.ps1 -Channel 5.0 -Runtime dotnet
 
 
-$ExePath = "$ScanHttpServerFolder\bin\ScanHttpServer.dll"
+$ExePath = "$ScanHttpServerFolder\ScanHttpServer.dll"
 Write-Host Starting Process $ExePath
 while($true){
     $pinfo = New-Object System.Diagnostics.ProcessStartInfo
