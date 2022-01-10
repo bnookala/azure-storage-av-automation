@@ -7,9 +7,7 @@ $ScanHttpServerBinZipUrl = "https://github.com/Azure/azure-storage-av-automation
 
 # Download Http Server bin files
 
-Write-Host Downloading and expanding ScanHttpServer
-
-Invoke-WebRequest $ScanHttpServerBinZipUrl -OutFile $ScanHttpServerFolder\ScanHttpServer.zip
+Write-Host Expanding ScanHttpServer
 Expand-Archive $ScanHttpServerFolder\ScanHttpServer.zip -DestinationPath $ScanHttpServerFolder\ -Force
 
 cd $ScanHttpServerFolder
