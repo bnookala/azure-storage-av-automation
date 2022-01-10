@@ -14,7 +14,7 @@ namespace ScanHttpServer
 {
     public class ScanHttpServer
     {
-        
+
         private enum requestType { SCAN }
 
         public static async Task HandleRequestAsync(HttpListenerContext context)
@@ -121,7 +121,7 @@ namespace ScanHttpServer
         public static void SetUpLogger(string logFileName)
         {
             string runDirPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string logFilePath = Path.Combine(runDirPath, "log", logFileName);
+            string logFilePath = Path.Combine("C:", "log", logFileName);
             Log.Logger = new LoggerConfiguration()
                 .Enrich.WithExceptionDetails()
                 .WriteTo.File(logFilePath)
