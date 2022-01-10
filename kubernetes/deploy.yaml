@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: aksdefender.azurecr.io/defender-windows-docker:65
+        image: aksdefender.azurecr.io/defender-windows-docker:66
         ports:
         - containerPort: 80
       nodeSelector:
