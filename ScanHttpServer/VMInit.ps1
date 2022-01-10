@@ -1,29 +1,18 @@
 #Init
 $ScanHttpServerFolder = "C:\ScanHttpServer\bin"
-$runLoopPath = "$ScanHttpServerFolder\runLoop.ps1"
 
 Start-Transcript -Path C:\VmInit.log
-New-Item -ItemType Directory C:\ScanHttpServer
-New-Item -ItemType Directory $ScanHttpServerFolder
 
-if($args.Count -gt 0){
-    if(-Not (Test-Path $ScanHttpServerFolder\vminit.config)){
-        New-Item $ScanHttpServerFolder\vminit.config
-    }
-    Set-Content $ScanHttpServerFolder\vminit.config $args[0]
-}
-
-$ScanHttpServerBinZipUrl = Get-Content $ScanHttpServerFolder\vminit.config
+$ScanHttpServerBinZipUrl = "https://github.com/Azure/azure-storage-av-automation/releases/latest/download/ScanHttpServer.zip"
 
 # Download Http Server bin files
+
+Write-Host Downloading and expanding ScanHttpServer
+
 Invoke-WebRequest $ScanHttpServerBinZipUrl -OutFile $ScanHttpServerFolder\ScanHttpServer.zip
 Expand-Archive $ScanHttpServerFolder\ScanHttpServer.zip -DestinationPath $ScanHttpServerFolder\ -Force
 
 cd $ScanHttpServerFolder
-
-Write-Host Scheduling task for startup
-
-&schtasks /create /tn StartScanHttpServer /sc onstart /tr "powershell.exe C:\ScanHttpServer\bin\runLoop.ps1"  /NP /DELAY 0001:00 /RU SYSTEM
 
 Write-Host Creating and adding certificate
 
@@ -45,6 +34,47 @@ Write-Host Updating Signatures for the antivirus
 & "C:\Program Files\Windows Defender\MpCmdRun.exe" -SignatureUpdate
 #Running the App
 Write-Host Starting Run-Loop
-start-process powershell -verb runas -ArgumentList $runLoopPath
+
+#start-process powershell -verb runas -ArgumentList $runLoopPath
+
+Write-Host Install .net 5 sdk + runtime
+if (-Not (Test-Path $ScanHttpServerFolder\dotnet-install.ps1)){
+    Write-Host dotnet-install script doesnt exist, Downloading
+    Invoke-WebRequest "https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1" -OutFile $ScanHttpServerFolder\dotnet-install.ps1
+}
+
+cd $ScanHttpServerFolder
+Write-Host Installing dotnet Runtime
+.\dotnet-install.ps1 -Channel 5.0 -Runtime dotnet
+
+Write-Host Starting Process $ExePath
+while($true){
+    $pinfo = New-Object System.Diagnostics.ProcessStartInfo
+    $pinfo.FileName = $ExePath
+    $pinfo.RedirectStandardError = $true
+    $pinfo.RedirectStandardOutput = $true
+    $pinfo.UseShellExecute = $false
+    $pinfo.Arguments = "localhost"
+    $process = New-Object System.Diagnostics.Process
+    $process.StartInfo = $pinfo
+    $process.Start() | Out-Null
+    $process.WaitForExit()
+    $stdout = $process.StandardOutput.ReadToEnd()
+    $stderr = $process.StandardError.ReadToEnd()
+    Write-Host "stdout: $stdout"
+    Write-Host "stderr: $stderr"
+    Write-Host "exit code: " + $process.ExitCode
+
+    #$process = Start-Process $ExePath -PassThru -Wait
+
+    if($process.ExitCode -ne 0){
+        Write-Host Process Exited with errors, please check the logs in $ScanHttpServerFolder\log
+    }
+    else {
+        Write-Host Proccess Exited with no errors
+    }
+
+    Write-Host Restarting Process $ExePath
+}
 
 Stop-Transcript

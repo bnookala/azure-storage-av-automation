@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2019-amd64
 
-WORKDIR C:/ScanHttpServer
-COPY ./build  C:/ScanHttpServer
-COPY startProcess.ps1 C:/
+WORKDIR C:/ScanHttpServer/bin
+COPY VMInit.ps1 C:/VMInit.ps1
 
-ENTRYPOINT [ "powershell.exe", "C:/startProcess.ps1" ]
+ENTRYPOINT [ "powershell.exe", "C:/VMInit.ps1" ]
