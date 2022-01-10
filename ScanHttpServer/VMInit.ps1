@@ -20,7 +20,7 @@ $appGuid = '{'+[guid]::NewGuid().ToString()+'}'
 
 Write-Host successfully created new certificate $cert
 
-netsh http delete sslcert ipport=0.0.0.0:443
+#netsh http delete sslcert ipport=0.0.0.0:443
 netsh http add sslcert ipport=0.0.0.0:443 appid=$appGuid certhash="$thumb"
 
 Write-Host Adding firewall rules
