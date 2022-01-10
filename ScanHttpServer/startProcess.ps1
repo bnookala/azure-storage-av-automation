@@ -6,7 +6,7 @@ Start-Transcript -Path runLoopStartup.log
 
 Write-Host Starting Process $ExePath
 while($true){
-    $process = Start-Process dotnet -ArgumentList $ExePath -PassThru -Wait
+    $process = Start-Process $ExePath -PassThru -Wait
 
     if($process.ExitCode -ne 0){
         Write-Host Process Exited with errors, please check the logs in $ScanHttpServerFolder\log
