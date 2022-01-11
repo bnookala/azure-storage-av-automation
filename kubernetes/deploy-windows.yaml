@@ -15,7 +15,7 @@ spec:
         app: windows-defender
     spec:
       containers:
-      - name: nginx
+      - name: windows
         image: aksdefender.azurecr.io/defender-windows-docker:85
         ports:
         - containerPort: 80

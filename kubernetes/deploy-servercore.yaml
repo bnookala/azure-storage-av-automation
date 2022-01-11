@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: windows-defender-servercore
+  labels:
+    app: windows-defender-servercore
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: windows-defender-servercore
+  template:
+    metadata:
+      labels:
+        app: windows-defender-servercore
+    spec:
+      containers:
+      - name: windows
+        image: mcr.microsoft.com/dotnet/runtime:5.0.13-windowsservercore-ltsc2019
+        command: ["ping", "-t", "localhost"]
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        agentpool: win
