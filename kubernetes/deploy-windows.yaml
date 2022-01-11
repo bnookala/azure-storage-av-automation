@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: windows
-        image: aksdefender.azurecr.io/defender-windows-docker:85
+        image: aksdefender.azurecr.io/defender-windows-docker:90
         ports:
         - containerPort: 80
       nodeSelector:
