@@ -3,6 +3,9 @@ $ScanHttpServerFolder = "C:\ScanHttpServer\bin"
 
 Start-Transcript -Path C:\VmInit.log
 
+# Start Defender
+Start-Service windefend
+
 # Expand HTTP Server Bin files
 Write-Host Expanding ScanHttpServer
 Expand-Archive $ScanHttpServerFolder\ScanHttpServer.zip -DestinationPath $ScanHttpServerFolder\ -Force

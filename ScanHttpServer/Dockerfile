@@ -7,11 +7,11 @@ COPY ScanHttpServer.zip C:/ScanHttpServer/bin/
 RUN ["powershell", "Set-ExecutionPolicy", "-ExecutionPolicy", "Bypass", "-Scope", "LocalMachine"]
 
 # PS: Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\WinDefend\" -Name "Start" -Value 3
-RUN powershell -Command Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\WinDefend\" -Name "Start" -Value 3
+RUN powershell -Command "& {Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\WinDefend\" -Name "Start" -Value 3}"
 # RUN ["powershell", "Set-ItemProperty", "-Path", "HKLM:\SYSTEM\CurrentControlSet\Services\WinDefend\", "-Name", "Start", "-Value", "3"]
 
 # PS: Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\WinDefend\" -Name "LaunchProtected" -Value 0
-RUN powershell -Command Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\WinDefend\" -Name "LaunchProtected" -Value 0
+RUN powershell -Command "& {Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\WinDefend\" -Name "LaunchProtected" -Value 0}"
 # RUN ["powershell", "Set-ItemProperty", "-Path", "HKLM:\SYSTEM\CurrentControlSet\Services\WinDefend\", "-Name", "LaunchProtected", "-Value", "0"]
 
 ENTRYPOINT [ "powershell.exe", "C:/VMInit.ps1" ]
